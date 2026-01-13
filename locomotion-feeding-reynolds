@@ -1,0 +1,475 @@
+import React, { useState } from 'react';
+import { ChevronDown, ChevronUp, Droplet, Skull, Move, FlaskConical } from 'lucide-react';
+
+const IntegratedPhysiologyLab = () => {
+  const [expandedSections, setExpandedSections] = useState({
+    intro: true,
+    prelab: false,
+    part1: false,
+    part2: false,
+    part3: false,
+    synthesis: false
+  });
+
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
+  const Section = ({ id, title, icon: Icon, children }) => (
+    <div className="mb-4 border border-gray-300 rounded-lg overflow-hidden">
+      <button
+        onClick={() => toggleSection(id)}
+        className="w-full px-6 py-4 bg-blue-50 hover:bg-blue-100 flex items-center justify-between transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <Icon className="w-5 h-5 text-blue-600" />
+          <span className="font-semibold text-lg text-gray-800">{title}</span>
+        </div>
+        {expandedSections[id] ? 
+          <ChevronUp className="w-5 h-5 text-gray-600" /> : 
+          <ChevronDown className="w-5 h-5 text-gray-600" />
+        }
+      </button>
+      {expandedSections[id] && (
+        <div className="px-6 py-4 bg-white">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="max-w-5xl mx-auto p-6 bg-gray-50">
+      <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          Comparative Physiology Lab: Form, Function, and Physics
+        </h1>
+        <h2 className="text-xl text-gray-600 mb-4">
+          Integrating Locomotion, Feeding Strategies, and Fluid Dynamics
+        </h2>
+        <div className="border-t border-gray-200 pt-4">
+          <p className="text-gray-700 mb-2"><strong>Duration:</strong> 3 hours</p>
+          <p className="text-gray-700 mb-2"><strong>Level:</strong> Undergraduate Animal Physiology</p>
+          <p className="text-gray-700"><strong>Focus:</strong> Vertebrates with comparisons to high-functioning invertebrates</p>
+        </div>
+      </div>
+
+      <Section id="intro" title="Introduction and Learning Objectives" icon={FlaskConical}>
+        <div className="space-y-4">
+          <p className="text-gray-700 leading-relaxed">
+            Morphology reflects the evolutionary solutions to physical challenges organisms face in their environments. 
+            This integrated laboratory explores how body size, the physics of moving through fluids, locomotor strategies, 
+            and feeding mechanisms are interconnected through evolutionary time. By comparing vertebrates with 
+            high-functioning invertebrates like crustaceans and octopuses, you will discover that similar ecological 
+            pressures can produce both convergent solutions and dramatically different alternatives depending on 
+            phylogenetic constraints and body plans.
+          </p>
+          
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <h3 className="font-semibold text-gray-800 mb-2">Learning Objectives</h3>
+            <p className="text-gray-700 mb-2">By the end of this lab, you will be able to:</p>
+            <ul className="list-disc list-inside space-y-1 text-gray-700 ml-2">
+              <li>Calculate Reynolds numbers and explain their significance for aquatic organism locomotion and feeding</li>
+              <li>Identify and compare skeletal and morphological adaptations for different locomotor modes</li>
+              <li>Analyze feeding structures and relate them to diet, foraging strategy, and ecology</li>
+              <li>Recognize convergent evolution and divergent solutions to similar ecological challenges</li>
+              <li>Integrate physics, morphology, and ecology to explain organism design</li>
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="prelab" title="Pre-Lab Preparation and Background" icon={FlaskConical}>
+        <div className="space-y-4">
+          <h3 className="font-semibold text-gray-800">Key Concepts to Review</h3>
+          
+          <div className="bg-yellow-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-800 mb-2">Reynolds Number</h4>
+            <p className="text-gray-700 mb-2">
+              The Reynolds number is a dimensionless value that predicts flow patterns in fluid dynamics:
+            </p>
+            <div className="bg-white p-3 rounded border border-yellow-200 font-mono text-center my-2">
+              Re = (density x velocity x length) / viscosity
+            </div>
+            <p className="text-gray-700 text-sm mb-2">
+              Where: density is fluid density, velocity is object speed, length is characteristic dimension, viscosity is dynamic viscosity
+            </p>
+            <ul className="list-disc list-inside space-y-1 text-gray-700 ml-2 text-sm">
+              <li><strong>Re less than 1:</strong> Laminar flow dominates; viscous forces are huge relative to inertia (tiny organisms)</li>
+              <li><strong>Re 1-2000:</strong> Transitional regime; both forces matter</li>
+              <li><strong>Re greater than 2000:</strong> Turbulent flow; inertia dominates (large, fast organisms)</li>
+            </ul>
+          </div>
+
+          <div className="bg-green-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-800 mb-2">Locomotor Categories</h4>
+            <ul className="space-y-2 text-gray-700">
+              <li><strong>Cursorial:</strong> Adapted for running with long limbs and digitigrade stance</li>
+              <li><strong>Fossorial:</strong> Adapted for digging with powerful forelimbs and reduced eyes</li>
+              <li><strong>Aquatic:</strong> Streamlined bodies with fins, flippers, or jet propulsion</li>
+              <li><strong>Aerial:</strong> Wings, lightweight skeleton, keeled sternum</li>
+              <li><strong>Arboreal:</strong> Grasping appendages and long tail for balance</li>
+            </ul>
+          </div>
+
+          <div className="bg-purple-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-800 mb-2">Feeding Strategy Categories</h4>
+            <ul className="space-y-2 text-gray-700">
+              <li><strong>Carnivore:</strong> Sharp teeth or beaks, strong jaw muscles, binocular vision</li>
+              <li><strong>Herbivore:</strong> Grinding teeth, complex digestive systems, often lateral eyes</li>
+              <li><strong>Omnivore:</strong> Mixed dentition and generalist morphology</li>
+              <li><strong>Filter feeder:</strong> Baleen, gill rakers, or specialized appendages</li>
+              <li><strong>Suction feeder:</strong> Protrusible jaws and expandable buccal cavity</li>
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="part1" title="Part 1: Reynolds Number and Aquatic Locomotion" icon={Droplet}>
+        <div className="space-y-4">
+          <div className="bg-blue-100 p-4 rounded-lg border-l-4 border-blue-600">
+            <p className="font-semibold text-gray-800">Station Duration: 45 minutes</p>
+            <p className="text-gray-700 text-sm">Work in groups of 3-4 students</p>
+          </div>
+
+          <h3 className="font-semibold text-gray-800 text-lg">Materials</h3>
+          <ul className="list-disc list-inside text-gray-700 ml-2">
+            <li>Tall graduated cylinders (1000 mL minimum)</li>
+            <li>Water and corn syrup at room temperature</li>
+            <li>Objects of various sizes and shapes</li>
+            <li>Stopwatch or smartphone timer</li>
+            <li>Ruler or calipers</li>
+            <li>Calculator</li>
+            <li>Data sheet</li>
+          </ul>
+
+          <h3 className="font-semibold text-gray-800 text-lg mt-4">Procedure</h3>
+          <ol className="list-decimal list-inside space-y-2 text-gray-700 ml-2">
+            <li>Measure and record the dimensions of each object</li>
+            <li>Fill one graduated cylinder with water and another with corn syrup</li>
+            <li>For each object in each fluid, mark start and finish lines, measure distance, drop object and time descent, calculate velocity, repeat three times and average</li>
+            <li>Calculate Reynolds number for each trial</li>
+          </ol>
+
+          <div className="bg-gray-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Table 1: Reynolds Number Data Sheet</h4>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse border border-gray-300 text-sm">
+                <thead className="bg-gray-200">
+                  <tr>
+                    <th className="border border-gray-300 p-2">Object</th>
+                    <th className="border border-gray-300 p-2">Fluid</th>
+                    <th className="border border-gray-300 p-2">Length</th>
+                    <th className="border border-gray-300 p-2">Velocity</th>
+                    <th className="border border-gray-300 p-2">Reynolds Number</th>
+                    <th className="border border-gray-300 p-2">Flow Regime</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td className="border border-gray-300 p-2" colSpan="6">Fill in your data here</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="bg-yellow-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Analysis Questions</h4>
+            <ol className="list-decimal list-inside space-y-2 text-gray-700 ml-2">
+              <li>How does object size affect Reynolds number? How does this relate to organism body size?</li>
+              <li>Compare the Reynolds numbers in water versus corn syrup. What does this tell you about how organisms of different sizes experience their fluid environment?</li>
+              <li>Calculate approximate Reynolds number for a copepod larva versus a tuna. What are the implications for their swimming strategies?</li>
+              <li>How might Reynolds number influence feeding strategies in aquatic organisms?</li>
+            </ol>
+          </div>
+
+          <div className="bg-green-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Connecting to Organisms</h4>
+            <p className="text-gray-700 mb-2">Consider these examples across the Reynolds spectrum:</p>
+            <ul className="list-disc list-inside space-y-1 text-gray-700 ml-2">
+              <li><strong>Low Re:</strong> Copepods and larval crustaceans use rowing motions with surface forces dominating</li>
+              <li><strong>Intermediate Re:</strong> Small fish and juvenile squid use transitional strategies</li>
+              <li><strong>High Re:</strong> Large fish and marine mammals need streamlining and can use inertia</li>
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="part2" title="Part 2: Comparative Locomotor Morphology" icon={Move}>
+        <div className="space-y-4">
+          <div className="bg-blue-100 p-4 rounded-lg border-l-4 border-blue-600">
+            <p className="font-semibold text-gray-800">Station Duration: 45 minutes</p>
+            <p className="text-gray-700 text-sm">Rotate through 4-5 stations examining different locomotor specialists</p>
+          </div>
+
+          <h3 className="font-semibold text-gray-800 text-lg">Materials</h3>
+          <ul className="list-disc list-inside text-gray-700 ml-2">
+            <li>Skeletal specimens or high-quality images of vertebrates</li>
+            <li>Preserved crustacean specimens showing appendage diversity</li>
+            <li>Octopus specimen or detailed images</li>
+            <li>Calipers or rulers</li>
+            <li>Data sheet</li>
+          </ul>
+
+          <div className="bg-purple-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Station Examples</h4>
+            
+            <div className="space-y-3 mt-3">
+              <div className="bg-white p-3 rounded border border-purple-200">
+                <h5 className="font-semibold text-gray-800">Station A: Cursorial Mammals</h5>
+                <p className="text-gray-700 text-sm mt-1">
+                  Examine limb proportions, joint structure, digitigrade stance, and reduced lateral digits. 
+                  Measure bone length ratios and metacarpal elongation.
+                </p>
+              </div>
+
+              <div className="bg-white p-3 rounded border border-purple-200">
+                <h5 className="font-semibold text-gray-800">Station B: Aquatic Vertebrates</h5>
+                <p className="text-gray-700 text-sm mt-1">
+                  Compare body streamlining, limb modifications like flippers or fins, and tail structure. 
+                  Note how different lineages solved aquatic locomotion.
+                </p>
+              </div>
+
+              <div className="bg-white p-3 rounded border border-purple-200">
+                <h5 className="font-semibold text-gray-800">Station C: Aerial Specialists</h5>
+                <p className="text-gray-700 text-sm mt-1">
+                  Examine wing structure, keeled sternum, pneumatic bones, and wing loading. 
+                  Compare convergent solutions between birds and bats.
+                </p>
+              </div>
+
+              <div className="bg-white p-3 rounded border border-purple-200">
+                <h5 className="font-semibold text-gray-800">Station D: Crustacean Locomotor Diversity</h5>
+                <p className="text-gray-700 text-sm mt-1">
+                  Compare swimming, walking, and burrowing crustaceans. 
+                  Examine appendage specialization, number of walking legs, and pleopod structure.
+                </p>
+              </div>
+
+              <div className="bg-white p-3 rounded border border-purple-200">
+                <h5 className="font-semibold text-gray-800">Station E: Octopus Locomotion</h5>
+                <p className="text-gray-700 text-sm mt-1">
+                  Examine arm structure with sucker arrangement and musculature, mantle cavity, and siphon. 
+                  Understand jet propulsion, crawling, and arm-mediated locomotion.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Table 2: Locomotor Morphology Comparison</h4>
+            <p className="text-gray-700 text-sm mb-2">For each station, record observations in a table with these categories:</p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse border border-gray-300 text-sm">
+                <thead className="bg-gray-200">
+                  <tr>
+                    <th className="border border-gray-300 p-2">Organism</th>
+                    <th className="border border-gray-300 p-2">Locomotor Mode</th>
+                    <th className="border border-gray-300 p-2">Key Features</th>
+                    <th className="border border-gray-300 p-2">Measurements</th>
+                    <th className="border border-gray-300 p-2">Trade-offs</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td className="border border-gray-300 p-2" colSpan="5">Record your observations</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="bg-yellow-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Analysis Questions</h4>
+            <ol className="list-decimal list-inside space-y-2 text-gray-700 ml-2">
+              <li>What convergent features do you observe in organisms that share similar locomotor modes but different phylogenies?</li>
+              <li>How do crustacean locomotor solutions differ from vertebrate solutions?</li>
+              <li>Compare the octopus locomotor repertoire to vertebrates.</li>
+              <li>Identify at least two morphological trade-offs.</li>
+              <li>How might Reynolds number constraints influence the locomotor morphology of small versus large aquatic organisms?</li>
+            </ol>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="part3" title="Part 3: Feeding Morphology and Strategies" icon={Skull}>
+        <div className="space-y-4">
+          <div className="bg-blue-100 p-4 rounded-lg border-l-4 border-blue-600">
+            <p className="font-semibold text-gray-800">Station Duration: 45 minutes</p>
+            <p className="text-gray-700 text-sm">Examine skulls, beaks, and feeding structures</p>
+          </div>
+
+          <h3 className="font-semibold text-gray-800 text-lg">Materials</h3>
+          <ul className="list-disc list-inside text-gray-700 ml-2">
+            <li>Vertebrate skulls representing different diets</li>
+            <li>Bird beaks or high-quality images</li>
+            <li>Crustacean specimens showing mouthpart diversity</li>
+            <li>Octopus beak specimen or images</li>
+            <li>Calipers and data sheet</li>
+          </ul>
+
+          <div className="bg-green-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Skull Analysis Protocol</h4>
+            <p className="text-gray-700 mb-2">For each skull or feeding structure, systematically examine and record:</p>
+            <ol className="list-decimal list-inside space-y-1 text-gray-700 ml-2">
+              <li><strong>Dentition:</strong> Tooth type, number, arrangement, wear patterns</li>
+              <li><strong>Jaw structure:</strong> Temporalis fossa size, jaw articulation, gape</li>
+              <li><strong>Cranial features:</strong> Sagittal crest presence, zygomatic arch robustness, orbit position</li>
+              <li><strong>Measurements:</strong> Skull length, jaw length, tooth dimensions, orbit diameter</li>
+              <li><strong>Predicted diet:</strong> Based on morphology</li>
+            </ol>
+          </div>
+
+          <div className="bg-purple-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Example Comparisons</h4>
+            
+            <div className="space-y-3 mt-3">
+              <div className="bg-white p-3 rounded border border-purple-200">
+                <h5 className="font-semibold text-gray-800">Carnivore Examples</h5>
+                <p className="text-gray-700 text-sm mt-1">
+                  Sharp canines and carnassials, powerful jaw muscles with large temporalis fossa, 
+                  forward-facing eyes for binocular vision. In birds: hooked beaks and sharp talons.
+                </p>
+              </div>
+
+              <div className="bg-white p-3 rounded border border-purple-200">
+                <h5 className="font-semibold text-gray-800">Herbivore Examples</h5>
+                <p className="text-gray-700 text-sm mt-1">
+                  Grinding molars, diastema, laterally positioned eyes, often lacks canines. 
+                  In birds: strong beaks for cracking seeds or specialized for nectar.
+                </p>
+              </div>
+
+              <div className="bg-white p-3 rounded border border-purple-200">
+                <h5 className="font-semibold text-gray-800">Crustacean Mouthparts</h5>
+                <p className="text-gray-700 text-sm mt-1">
+                  Compare mandibles, maxillae, and maxillipeds across filter feeders, 
+                  scavengers with crushing mouthparts, and predators with sharp mandibles.
+                </p>
+              </div>
+
+              <div className="bg-white p-3 rounded border border-purple-200">
+                <h5 className="font-semibold text-gray-800">Octopus Beak</h5>
+                <p className="text-gray-700 text-sm mt-1">
+                  Parrot-like chitinous beak and radula for rasping. Compare to vertebrate predator solutions. 
+                  How does a soft-bodied animal process hard prey?
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Table 3: Feeding Morphology Comparison</h4>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse border border-gray-300 text-sm">
+                <thead className="bg-gray-200">
+                  <tr>
+                    <th className="border border-gray-300 p-2">Organism</th>
+                    <th className="border border-gray-300 p-2">Strategy</th>
+                    <th className="border border-gray-300 p-2">Key Features</th>
+                    <th className="border border-gray-300 p-2">Predicted Diet</th>
+                    <th className="border border-gray-300 p-2">Ecology</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td className="border border-gray-300 p-2" colSpan="5">Record your observations</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="bg-yellow-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Analysis Questions</h4>
+            <ol className="list-decimal list-inside space-y-2 text-gray-700 ml-2">
+              <li>Compare carnivore skulls across different vertebrate groups. What features are convergent?</li>
+              <li>How do crustacean feeding solutions differ from vertebrate solutions for similar diets?</li>
+              <li>What are advantages and limitations of the octopus beak compared to vertebrate jaws and teeth?</li>
+              <li>Identify at least one example where feeding morphology might constrain or facilitate locomotor ability.</li>
+              <li>How might body size and Reynolds number influence feeding strategy choices in aquatic environments?</li>
+            </ol>
+          </div>
+
+          <div className="bg-green-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Evolutionary Context</h4>
+            <p className="text-gray-700 mb-2">As you analyze feeding structures, consider:</p>
+            <ul className="list-disc list-inside space-y-1 text-gray-700 ml-2">
+              <li>How natural selection shaped these structures in response to food availability and competition</li>
+              <li>How feeding morphology can drive speciation</li>
+              <li>Trade-offs between specialization and generalization</li>
+              <li>The role of developmental constraints in limiting possible evolutionary trajectories</li>
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="synthesis" title="Synthesis and Discussion" icon={FlaskConical}>
+        <div className="space-y-4">
+          <div className="bg-blue-100 p-4 rounded-lg border-l-4 border-blue-600">
+            <p className="font-semibold text-gray-800">Activity Duration: 30 minutes</p>
+            <p className="text-gray-700 text-sm">Group discussion and individual written responses</p>
+          </div>
+
+          <div className="bg-orange-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-800 mb-2">Integration Questions</h4>
+            <p className="text-gray-700 mb-3">
+              These questions ask you to connect concepts across all three parts of the lab.
+            </p>
+            
+            <ol className="list-decimal space-y-3 text-gray-700 ml-2">
+              <li className="pl-2">
+                <strong>Physics constrains biology:</strong> Explain how Reynolds number fundamentally shapes 
+                the design space available to organisms. Provide specific examples from your observations.
+              </li>
+              
+              <li className="pl-2">
+                <strong>Convergent evolution:</strong> Identify at least three examples of convergent evolution 
+                you observed today. What selective pressures drove these similarities?
+              </li>
+              
+              <li className="pl-2">
+                <strong>Multiple solutions:</strong> Choose one ecological challenge and compare how at least three 
+                different organisms with different body plans solved it.
+              </li>
+              
+              <li className="pl-2">
+                <strong>Form-function-ecology triangle:</strong> Select one organism you examined today and explain 
+                how its morphology, physics of environment, locomotor strategy, and feeding strategy are interconnected.
+              </li>
+              
+              <li className="pl-2">
+                <strong>Vertebrate vs invertebrate solutions:</strong> What fundamental differences in body plan 
+                lead to different solutions for similar problems?
+              </li>
+              
+              <li className="pl-2">
+                <strong>Trade-offs and constraints:</strong> Identify at least three morphological trade-offs you 
+                observed. How do these trade-offs shape ecological niches?
+              </li>
+              
+              <li className="pl-2">
+                <strong>Scale matters:</strong> How does changing body size by three orders of magnitude 
+                change the problems an organism faces and the solutions available?
+              </li>
+            </ol>
+          </div>
+
+          <div className="bg-purple-50 p-4 rounded-lg mt-4">
+            <h4 className="font-semibold text-gray-800 mb-2">Extended Thinking Challenge</h4>
+            <p className="text-gray-700 mb-2">
+              Choose one scenario and predict the morphological features you would expect to evolve:
+            </p>
+            <ol className="list-decimal list-inside space-y-2 text-gray-700 ml-2 mt-2">
+              <li>A small aquatic predator that hunts in dense vegetation</li>
+              <li>A large filter-feeding marine vertebrate</li>
+              <li>A terrestrial invertebrate that needs to move quickly across open ground</li>
+              <li>An aerial vertebrate that feeds on flying insects</li>
+            </ol>
+          </div>
+        </div>
+      </Section>
+    </div>
+  );
+};
+
+export default IntegratedPhysiologyLab;
